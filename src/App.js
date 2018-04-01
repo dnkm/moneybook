@@ -2,7 +2,17 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import db from './util/db';
+
 class App extends Component {
+  constructor(props) {
+      super(props);
+      db.collection("users").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          console.log(`${doc.id} => ${doc.data()}`);
+      });
+    });
+  }
   render() {
     return (
       <div className="App">
