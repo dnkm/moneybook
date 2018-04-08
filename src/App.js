@@ -2,31 +2,35 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import db from './util/db';
+import DataCollection from './util/DataCollection';
 
 class App extends Component {
-  //a
   constructor(props) {
       super(props);
-      db.collection("users").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          console.log(`${doc.id} => ${doc.data()}`);
-      });
-    });
+      this.state = {
+        data: []
+      }
+      this.loadData();
   }
-  
-  //b
+  async loadData() {
+    let data = await DataCollection.load()
+    this.setState({data}); 
+  }
   render() {
+    console.log("length" ,this.state.data.length);
+    console.log("content" ,this.state.data);
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-          sdifjoweifjewo
-        </p>
+        
+
+        {this.state.data.map(doc => {
+          return (
+            <div>
+              <span>{doc}</span>
+            </div>
+          )
+        })}
+
       </div>
     );
   }
