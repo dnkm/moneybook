@@ -13,12 +13,12 @@ class App extends Component {
       this.loadData();
   }
   async loadData() {
-    let data = await DataCollection.load()
+
+    let data = await DataCollection.list();
     this.setState({data}); 
+    
   }
   render() {
-    console.log("length" ,this.state.data.length);
-    console.log("content" ,this.state.data);
     return (
       <div className="App">
         
@@ -26,7 +26,7 @@ class App extends Component {
         {this.state.data.map(doc => {
           return (
             <div>
-              <span>{doc}</span>
+              <span>{doc.id}</span>
             </div>
           )
         })}

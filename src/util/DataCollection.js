@@ -4,16 +4,17 @@ export default class DataCollection {
     static list() {
         return new Promise(resolve => {
 
-            let dataAr = [];
+            let data = [];
             db.collection("data").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    console.log(`${doc.id} => ${doc.data()}`);
-                    dataAr.push( doc.id );
-                  });
+                    let item = {
+                        id : doc.id,
+                        ...doc.data()
+                    }
+                    data.push(item);
                 });
-                console.log("data", dataAr);
-                resolve(dataAr);
-
+                resolve(data);
+            });
         });
     }
 
